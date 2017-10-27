@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["alu0100648782@ull.edu.es"]
 
   spec.summary       = %q{sumario de la gema}
-  spec.description   = %q{sumario de la gema}
+  spec.description   = %q{Descripcion de la gema}
   spec.homepage      = "https://github.com/alu0100648782/tdd-1718"
   spec.license       = "MIT"
 
