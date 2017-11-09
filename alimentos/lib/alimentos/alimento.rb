@@ -28,6 +28,10 @@ class Alimento
 		@aux = (@glucidos * 4) + (@lipidos * 9) + (@proteinas * 4)
 		@aux
 	end
+        
+        def == (otro)
+                self.class == otro.class && @nombre == otro.nombre && @proteinas == otro.proteinas && @glucidos == otro.glucidos && @lipidos == otro.lipidos
+        end
 
 	def to_s
 		"#{nombre}, #{proteinas}, #{glucidos}, #{lipidos}"
