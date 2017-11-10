@@ -138,12 +138,58 @@ describe Alimentos do
 		expect(@migrupo1.is_a? Grupo_carnes).to eq false
 	end
 
-	it 'Prueba de no pertenencia a Grupo_edad (clase hija) respond_to' do
+	it 'Prueba de no pertenencia a Grupo_carnes (clase hija) respond_to' do
 		expect(@migrupo1.respond_to? "Menu_carnes").to eq false
 	end
 
   end
+#----------------------------------------------------------------------------
+  context Grupo_carnes do
+        before :each do
+                @alimentos4 = Alimento.new("Cerdo", 21.5, 0.0, 6.3)
+                @alimentos5 = Alimento.new("Ternera", 21.1, 0.0, 3.1)
+                @alimentos6 = Alimento.new("Pollo", 26.6, 0.0, 5.6)
+                @migrupo2 = Grupo_carnes.new(
+                "Cerdo, Ternera y Pollo",
+                [ @alimentos4, @alimentos5, @alimentos6 ])
+        end
 
+        it 'Prueba Grupo_carnes' do
+                expect(@migrupo2.to_s).to eq("CERDO, TERNERA Y POLLO\n-Cerdo, 21.5, 0.0, 6.3,\n-Ternera, 21.1, 0.0, 3.1,\n-Pollo, 26.6, 0.0, 5.6")
+        end
+
+        it 'Prueba de pertenencia a Grupo (Clase madre)' do
+                expect(@migrupo2.is_a? Grupo).to eq true
+        end
+
+        it 'Prueba de no instancia de Grupo (Clase madre)' do
+                expect(@migrupo2.instance_of? Grupo).to equal false
+        end
+
+        it 'La clase del objeto Grupo_carnes' do
+                expect(@migrupo2.class).to eq(Grupo_carnes)
+        end
+
+        it 'Prueba de pertenencia a la superclase Grupo' do
+                expect(@migrupo2.class.superclass).to eq(Grupo)
+        end
+
+        it 'Prueba de pertenencia a Grupo_carnes (Clase hija)' do
+                expect(@migrupo2.is_a? Grupo_carnes).to eq true
+        end
+
+        it 'Prueba de pertenencia a Grupo_lacteos (Clase hija)' do
+                expect(@migrupo2.is_a? Grupo_lacteos).to eq false
+        end
+
+        it 'Prueba de no pertenencia a Grupo_lacteos (clase hija) respond_to' do
+                expect(@migrupo2.respond_to? "Menu_lacteos").to eq false
+        end
+
+  end
+
+
+#----------------------------------------------------------------------------
   context Nodo do
 	before :each do
 		@alimentos1 = Alimento.new("Huevo frito", 14.1, 0.0, 19.5)
@@ -190,7 +236,7 @@ describe Alimentos do
 	       "Huevos, lacteos y helados",
 	       [ @alimentos1, @alimentos2, @alimentos3 ])
 	       @migrupo2 = Grupo.new(
-	       "Carnes y derivados",
+	       "Cerdo, Ternera y Pollo",
 	       [ @alimentos4, @alimentos5, @alimentos6 ])
 	       @migrupo3 = Grupo.new(
 	       "Pescados y mariscos",
