@@ -268,4 +268,193 @@ describe Alimentos do
         	 expect(x =@lista1.cabeza.value).to equal(@migrupo4)
 	 end
   end
+
+#--------------------------------------------------------------------------------------------------------------
+  context "Prueba lista enumerable" do
+         before :each do
+                 @alimentos1 = Alimento.new("Huevo frito", 14.1, 0.0, 19.5)
+                 @alimentos2 = Alimento.new("Leche vaca", 3.3, 4.8, 3.2)
+                 @alimentos3 = Alimento.new("Yogurt", 3.8, 4.8, 3.8)
+                 @alimentos4 = Alimento.new("Cerdo", 21.5, 0.0, 6.3)
+                 @alimentos5 = Alimento.new("Ternera", 21.1, 0.0, 3.1)
+                 @alimentos6 = Alimento.new("Pollo", 20.6, 0.0, 5.6)
+                 @alimentos7 = Alimento.new("Bacalao", 17.7, 0.0, 0.4)
+                 @alimentos8 = Alimento.new("Atún", 21.5, 0.0, 15.5)
+                 @alimentos9 = Alimento.new("Salmón", 19.9, 0.0, 13.6)
+                 @alimentos10 = Alimento.new("Aceite de oliva", 0.0, 0.2, 99.6)
+                 @alimentos11 = Alimento.new("Chocolate", 5.3, 47.0, 30.0)
+                 @alimentos12 = Alimento.new("Azúcar", 0.0, 99.8, 0.0)
+                 @alimentos13 = Alimento.new("Arroz", 6.8, 77.7, 0.6)
+                 @alimentos14 = Alimento.new("Lentejas", 23.5, 52.0, 1.4)
+                 @alimentos15 = Alimento.new("Papas", 2.0, 15.4, 0.1)
+                 @alimentos16 = Alimento.new("Tomate", 1.0, 3.5, 0.2)
+                 @alimentos17 = Alimento.new("Cebolla", 1.3, 5.8, 0.3)
+                 @alimentos18 = Alimento.new("Manzana", 0.3, 12.4, 0.4)
+                 @alimentos19 = Alimento.new("Plátanos", 1.2, 21.4, 0.2)
+                 @migrupo1 = Grupo.new(
+                 "Huevos, lacteos y helados",
+                 [ @alimentos1, @alimentos2, @alimentos3 ])
+                 @migrupo2 = Grupo.new(
+                 "Carnes y derivados",
+                 [ @alimentos4, @alimentos5, @alimentos6 ])
+                 @migrupo3 = Grupo.new(
+                 "Pescados y mariscos",
+                 [ @alimentos7, @alimentos8, @alimentos9 ])
+                 @migrupo4 = Grupo.new(
+                 "Alimentos grasos",
+                 [ @alimentos10, @alimentos11, @alimentos12 ])
+                 @lista1 = Lista.new(nil,nil)
+         end
+
+      it 'Prueba minimo en una inserción con numeros' do
+		@lista1.insertar_varios([1,2])
+		expect(@lista1.min).to eq(1)
+      end
+
+      it 'Prueba minimo en una inserción con Grupos' do
+		@lista1.insertar_varios([@migrupo1,@migrupo2])
+		expect(@lista1.min).to eq(@migrupo2)
+      end
+
+      it 'Prueba maximo en una insercion con numeros' do
+		@lista1.insertar_varios([1,2])
+		expect(@lista1.max).to eq(2)
+      end
+
+      it 'Prueba maximo en una insercion con Grupos' do
+		@lista1.insertar_varios([@migrupo1,@migrupo2])
+		expect(@lista1.max).to eq(@migrupo1)
+      end
+
+      it 'Prueba drop en una insercion con numeros' do
+		@lista1.insertar_varios([1,2,3,4,5])
+		expect(@lista1.drop(3)).to eq([2,1])
+      end
+
+      it 'Prueba drop en una insercion con Grupos' do
+		@lista1.insertar_varios([@migrupo1,@migrupo2,@migrupo3,@migrupo4])
+		expect(@lista1.drop(2)).to eq([@migrupo2,@migrupo1])
+      end
+
+      it 'Prueba ordenacion en una insercion con numeros' do
+		@lista1.insertar_varios([1,3,2,4])
+		expect(@lista1.sort).to eq([1,2,3,4])
+      end
+
+      it 'Prueba ordenacion en una insercion con Grupos' do
+           @lista1.insertar_varios([@migrupo2,@migrupo4,@migrupo1,@migrupo3])
+           expect(@lista1.sort).to eq([@migrupo4,@migrupo2,@migrupo1,@migrupo3])
+      end
+
+      it 'Prueba del metodo all? con Grupos' do
+		@lista1.insertar_varios([@migrupo2,@migrupo4,@migrupo1,@migrupo3])
+		expect(@lista1.all?).to eq(true)
+      end
+ 
+      it 'Prueba del metodo all? con numeros' do
+		@lista1.insertar_varios([1,3,2,4])
+		expect(@lista1.all?).to eq(true)
+      end
+
+      #no puede comprobar que el valor de la struct de nodo no exista porque el valor no es nil
+      it 'Prueba del metodo all? con lista vacia' do
+		expect(@lista1.all?).to eq(true)
+      end
+
+      it 'Prueba del metodo any? con Grupos' do
+		@lista1.insertar_varios([@migrupo2,@migrupo4,@migrupo1,@migrupo3])
+		expect(@lista1.any?).to eq(true)
+      end
+ 
+      it 'Prueba del metodo any? con numeros' do
+		@lista1.insertar_varios([1,3,2,4])
+		expect(@lista1.any?).to eq(true)
+		expect(@lista1.any?{|x|x >=2}).to eq(true)
+      end
+
+      it 'Prueba del metodo collect con numeros' do
+		@lista1.insertar(3)
+		expect(@lista1.map{|i| i*i}).to eq([9])
+		expect(@lista1.collect{|i| i*i}).to eq([9])
+      end
+
+      it 'Prueba del metodo count con numeros' do
+		@lista1.insertar_varios([1,3,2,4,5,7,8])
+		expect(@lista1.count).to eq(7)
+      end
+
+      it 'Prueba el metodo detect con numero' do
+		@lista1.insertar_varios([1,2,3,0,5,7,4])
+		expect(@lista1.detect {|i| i == 0}).to eq(0)
+		expect(@lista1.find {|i| i == 3}).to eq(3)
+		expect(@lista1.find {|i| i % 2 == 0}).to eq(2)
+      end
+
+  end
+
+
+  context 'Menu Comparable' do
+	before :each do
+		@alimentos1 = Alimento.new("Huevo frito", 14.1, 0.0, 19.5)
+		@alimentos2 = Alimento.new("Leche vaca", 3.3, 4.8, 3.2)
+		@alimentos3 = Alimento.new("Yogurt", 3.8, 4.8, 3.8)
+		@alimentos4 = Alimento.new("Cerdo", 21.5, 0.0, 6.3)
+		@alimentos5 = Alimento.new("Ternera", 21.1, 0.0, 3.1)
+		@alimentos6 = Alimento.new("Pollo", 20.6, 0.0, 5.6)
+		@alimentos7 = Alimento.new("Bacalao", 17.7, 0.0, 0.4)
+		@alimentos8 = Alimento.new("Atún", 21.5, 0.0, 15.5)
+		@alimentos9 = Alimento.new("Salmón", 19.9, 0.0, 13.6)
+		@alimentos10 = Alimento.new("Aceite de oliva", 0.0, 0.2, 99.6)
+		@alimentos11 = Alimento.new("Chocolate", 5.3, 47.0, 30.0)
+		@alimentos12 = Alimento.new("Azúcar", 0.0, 99.8, 0.0)
+		@alimentos13 = Alimento.new("Arroz", 6.8, 77.7, 0.6)
+		@alimentos14 = Alimento.new("Lentejas", 23.5, 52.0, 1.4)
+		@alimentos15 = Alimento.new("Papas", 2.0, 15.4, 0.1)
+		@alimentos16 = Alimento.new("Tomate", 1.0, 3.5, 0.2)
+		@alimentos17 = Alimento.new("Cebolla", 1.3, 5.8, 0.3)
+		@alimentos18 = Alimento.new("Manzana", 0.3, 12.4, 0.4)
+		@alimentos19 = Alimento.new("Plátanos", 1.2, 21.4, 0.2)
+	        @grupo = Grupo.new(
+		"Huevos, lacteos y helados",
+		[ @alimentos1, @alimentos2, @alimentos3 ])
+		@grupo_carnes = Grupo_carnes.new(
+		"Carnes y derivados",
+		[ @alimentos4, @alimentos5, @alimentos6 ])
+		@grupo_pescados = Grupo_pescados.new(
+		"Pescados y mariscos",
+		[ @alimentos7, @alimentos8, @alimentos9 ])
+		@grupo_grasos = Grupo_grasos.new(
+		"Alimentos grasos",
+		[ @alimentos10, @alimentos11, @alimentos12 ])
+	end
+
+	 it 'Comparable Grupo carnes menor que Grupo pescados true' do
+		expect(@grupo_carnes < @grupo_pescados).to eq(true) 
+	 end
+
+	 it 'Comparable con grupo y grupo_pescados grupo menor grupo_pescados true' do
+		expect(@grupo < @grupo_pescados).to eq(true) 
+	end
+
+	it 'Comparable con grupo grupo mayor grupo_carnes true' do
+		expect(@grupo > @grupo_carnes).to eq(true) 
+	end
+
+	it 'Comparable con grupo_pescados mayor que grupo true' do
+		expect(@grupo_pescados > @grupo).to eq(true) 
+	end
+
+	it 'Comparable con grupo grupo igual grupo true' do
+		expect(@grupo == @grupo).to eq(true) 
+	end
+
+	it 'Comparable grupo_pescados mayor o igual que grupo_carnes true' do
+		expect(@grupo_pescados >= @grupo_carnes).to eq(true)
+	end
+
+	it 'Comparable grupo menor o igual que grupo_pescados true' do
+		expect(@grupo <= @grupo_pescados).to eq(true)
+	end
+  end  
+
 end
